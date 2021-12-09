@@ -1,7 +1,30 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "../styles/Dashboard.css";
 
+
 function Dashboard() {
+  const [query, setQuery] = useState("");
+  const [weather, setWeather] = useState({});
+ 
+  const search = (evt) => {
+    if (evt.key === "Enter") {
+      const url = `https://aerisweather1.p.rapidapi.com/observations/${query}`;
+  fetch(url, {
+	"method": "GET",
+	"headers": {
+		"x-rapidapi-host": "aerisweather1.p.rapidapi.com",
+		"x-rapidapi-key": "659873ca62msh3d98a1c00ba332ap158787jsn182defbd3e10"
+	}
+})
+.then((res)=> res.json())
+.then((response) => {
+	console.log(response);
+  setWeather(response);
+  setQuery("");
+});
+}
+};
+
   const dateBuilder = (dt) => {
     let months = [
       "January",
@@ -41,17 +64,24 @@ function Dashboard() {
           type="text"
           className="search-bar"
           placeholder="Search location..."
+          onChange={(e) => setQuery(e.target.value)}
+          value={query}
+          onKeyPress={search}
         ></input>
       </div>
+      {(typeof weather.response != "undefined") ? (
+      <div>
       <div className="location-box">
-        <div className="location">Baia Mare</div>
+        <div className="location">{weather.response.place.name}, {weather.response.place.country}</div>
         <div className="date">{dateBuilder(new Date())}</div>
       </div>
 
       <div className="weather-box">
-        <div className="temperature">15 C</div>
-        <div className="weather">Sunny</div>
+        <div className="temperature">{Math.round(weather.response.ob.tempC)}°C</div>
+        <div className="weather">{weather.response.ob.weather}</div>
       </div>
+      </div>
+      ) : ('')}
     </div>
   );
 }
