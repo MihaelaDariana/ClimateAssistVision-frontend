@@ -168,7 +168,7 @@ function Dashboard() {
 
   return (
     <div className="baseCanvas">
-      <div className="title">Climate Vission Assist</div>
+      <div className="title">Climate Assist Vision</div>
       <div className="search-box">
         <input
           type="text"
@@ -246,8 +246,8 @@ function Dashboard() {
           {" "}
           Weather on current location{" "}
         </button>
-        <button className="addButton" type="submit" onClick={submitHandler}> Add to favourites </button>
-        <button className="favourites-locations" onClick={handleRoute}>Favourites locations</button>
+        <button className="addButton" type="submit" onClick={submitHandler}> Add to favorites </button>
+        <button className="favourites-locations" onClick={handleRoute}>Favorites locations</button>
       </div>
     </div>
   );
